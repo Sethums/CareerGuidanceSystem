@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Guidance Prediction</title>
+</head>
+
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap");
+
+    * {
+        box-sizing: border-box;
+        padding: 0;
+    }
+
+    body {
+        align-items: center;
+        background: #D8AA96;
+        color: rgba(0, 0, 0, 0.8);
+        display: grid;
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        height: 100vh;
+        justify-items: center;
+        weight: 100vw;
+    }
+
+    .signup-container {
+        display: grid;
+        grid-template-areas: "left right";
+        max-width: 100%;
+    }
+
+    .left-container {
+        background: #807182;
+        overflow: hidden;
+        padding: 40px 0 0 0;
+        position: relative;
+        text-align: center;
+        width: 300px;
+    }
+
+    .left-container h1 {
+        color: rgba(0, 0, 0, 0.8);
+        display: inline-block;
+        font-size: 24px;
+    }
+
+    .left-container h1 i {
+        background: #F7B1AB;
+        border-radius: 50%;
+        color: #807182;
+        font-size: 24px;
+        margin-right: 5px;
+        padding: 10px;
+    }
+
+    .left-container .puppy {
+        bottom: -5px;
+        position: absolute;
+        text-align: center;
+    }
+
+    .left-container .puppy:before {
+        background: #807182;
+        content: "";
+        height: 100%;
+        left: 0;
+        opacity: 0.4;
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .left-container img {
+        filter: sepia(100%);
+        width: 70%;
+    }
+
+    .right-container {
+        background: #f9c7c2;
+        display: grid;
+        grid-template-areas: "." ".";
+        width: 70vw;
+    }
+
+    .right-container h1:nth-of-type(1) {
+        color: rgba(0, 0, 0, 0.8);
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    .right-container .set {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
+
+    .right-container input {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        height: 38px;
+        line-height: 38px;
+        padding-left: 5px;
+    }
+
+    .right-container select {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        height: 38px;
+        line-height: 38px;
+        padding-left: 5px;
+        width: 20vw;
+    }
+
+    .right-container input,
+    .right-container label {
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+    .right-container header {
+        padding: 40px;
+        height: 58vh;
+        overflow: scroll;
+    }
+
+    .right-container label,
+    .right-container input,
+    .right-container .pets-photo {
+        width: 20vw;
+    }
+
+    .right-container .pets-photo {
+        align-items: center;
+        display: grid;
+        grid-template-areas: ". .";
+    }
+
+    .right-container .pets-photo button {
+        border: none;
+        border-radius: 50%;
+        height: 38px;
+        margin-right: 10px;
+        outline: none;
+        width: 38px;
+    }
+
+    .right-container .pets-photo button i {
+        color: rgba(0, 0, 0, 0.8);
+        font-size: 16px;
+    }
+
+    .right-container .pets-weight .radio-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .right-container footer {
+        align-items: center;
+        background: #fff;
+        display: grid;
+        padding: 5px 40px;
+    }
+
+    .right-container footer button {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        height: 38px;
+        line-height: 38px;
+        width: 100px;
+        border-radius: 19px;
+        font-family: "Montserrat", sans-serif;
+    }
+
+    .right-container footer #clear {
+        background: #fff;
+        transition: 0.2s all ease-in-out;
+        cursor: pointer;
+
+    }
+
+    .right-container footer #clear:hover {
+        background: #171A2B;
+        color: white;
+    }
+
+    .right-container footer #predict {
+        background: #807182;
+        border: 1px solid transparent;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .right-container footer #predict:hover {
+        background: #171A2B;
+    }
+
+    .input-text label,
+    .pets-breed label,
+    .pets-birthday label,
+    .pets-gender label,
+    .pets-spayed-neutered label,
+    .pets-weight label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .radio-container {
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        display: inline-block;
+        padding: 5px;
+    }
+
+    .radio-container label {
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 2px;
+        display: inline-block;
+        height: 26px;
+        line-height: 26px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        transition: 0.2s all ease-in-out;
+        width: 80px;
+    }
+
+    .radio-container input[type=radio] {
+        display: none;
+    }
+
+    .radio-container input[type=radio]:checked+label {
+        background: #F7B1AB;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<body>
+
+    <form action="predict" class="form" id="form" name="form" method="post">
+
+
+        <div class='signup-container'>
+            <div class='left-container'>
+                <h1>
+                    <i class='fa fa-graduation-cap'></i>
+                    CAREERS
+                </h1>
+
+
+                <!---Response Message Area--->
+                    <h4 id="response_msg"> </h4>
+                <!---Response Message Area--->
+
+
+            </div>
+            <div class='right-container'>
+                <header>
+                    <h1>Find your passion with us !</h1>
+                    <p>Enter this form and get to know your most eligible career to select</p>
+                    <hr>
+
+
+                    <div class='set'>
+                        <div class='input-text'>
+                            <label for='input-text'>Acedamic percentage in OS</label>
+                            <input id='input-text' placeholder="Operating Systems" name="os" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Percentage in Algorithms</label>
+                            <input id='input-text' placeholder="Algorithms" name="algo" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Percentage in Programming Concepts</label>
+                            <input id='input-text' placeholder="Programming Concepts" name="program" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                    </div>
+                    <div class='set'>
+                        <div class='input-text'>
+                            <label for='input-text'>Percentage in Software Engineering</label>
+                            <input id='input-text' placeholder="Software Engineering" name="software" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Percentage in Computer Networks</label>
+                            <input id='input-text' placeholder="Computer Networks" name="computer" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Percentage in Electronics Subjects</label>
+                            <input id='input-text' placeholder="Electronics Subjects" name="electronics" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                    </div>
+                    <div class='set'>
+                        <div class='input-text'>
+                            <label for='input-text'>Percentage in Computer Architecture</label>
+                            <input id='input-text' placeholder="Computer Architecture" name="ca" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Percentage in Mathematics</label>
+                            <input id='input-text' placeholder="Percentage in Mathematics" name="maths" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Percentage in Communication skills</label>
+                            <input id='input-text' placeholder="Communication skills" name="communication" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                    </div>
+                    <div class='set'>
+                        <div class='input-text'>
+                            <label for='input-text'>Logical quotient rating</label>
+                            <input id='input-text' placeholder="Logical quotient rating" name="logical" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Hackathons</label>
+                            <input id='input-text' placeholder="Hackathons" name="hackathons" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Coding skills rating</label>
+                            <input id='input-text' placeholder="Coding skills rating" name="coding" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                    </div>
+                    <div class='set'>
+                        <div class='input-text'>
+                            <label for='input-text'>Public speaking points</label>
+                            <input id='input-text' placeholder="Public speaking points" name="speak" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+
+
+
+                        <div class='input-text'>
+                            <label for='input-text'>Can work long time before system?</label>
+                            <select name="work" id="">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+
+
+                            </select>
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Self-learning capability?</label>
+                            <select name="selflearn" id="">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+                    <div class='set'>
+                        <div class='input-text'>
+                            <label for='input-text'>Certifications</label>
+                            <select name="certifications" id="">
+                                <option value="0">App development</option>
+                                <option value="1">Distro making</option>
+                                <option value="2">Full stack</option>
+                                <option value="3">Hadoop</option>
+                                <option value="4">information security</option>
+                                <option value="5">Machine learning</option>
+                                <option value="6">Python</option>
+                                <option value="7">R programming</option>
+                                <option value="8">Shell programming</option>
+
+                            </select>
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Workshops</label>
+                            <select name="workshops" id="">
+                                <option value="0">Cloud computing</option>
+                                <option value="1">Datascience</option>
+                                <option value="2">Database security</option>
+                                <option value="3">Game development</option>
+                                <option value="4">Hacking</option>
+                                <option value="5">System designing</option>
+                                <option value="6">Testing</option>
+                                <option value="7">Web technologies</option>
+                            </select>
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Talenttests taken?</label>
+                            <select name="talent" id="">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class='set'>
+                        <div class='input-text'>
+                            <label for='input-text'>Memory capability score</label>
+                            <select name="memory" id="">
+                                <option value="0">Excellent</option>
+                                <option value="1">Medium</option>
+                                <option value="2">Poor</option>
+
+
+                            </select>
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Interested subjects</label>
+                            <select name="subjects" id="">
+                                <option value="0">Computer Architecture</option>
+                                <option value="1">IOT</option>
+                                <option value="2">Management</option>
+                                <option value="3">Software Engineering</option>
+                                <option value="4">Cloud computing</option>
+                                <option value="5">Data engineering</option>
+                                <option value="6">Hacking</option>
+                                <option value="7">Networks</option>
+                                <option value="8">Parallel computing</option>
+                                <option value="9">Programming</option>
+
+                            </select>
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Type of company want to settle in?</label>
+                            <select name="company" id="">
+                                <option value="0">BPA</option>
+                                <option value="1">Cloud Services</option>
+                                <option value="2">Finance</option>
+                                <option value="3">Product based</option>
+                                <option value="4">SAaS services</option>
+                                <option value="5">Sales and Marketing</option>
+                                <option value="6">Service Based</option>
+                                <option value="7">Testing and Maintainance Services
+                                <option value="8">Web Services</option>
+                                </option>
+                                <option value="9">Product development</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class='set'>
+                        <div class='input-text'>
+                            <label for='input-text'>Management or Technical</label>
+                            <select name="manage" id="">
+                                <option value="0">Management</option>
+                                <option value="1">Technical</option>
+
+                            </select>
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Hard/smart worker</label>
+                            <select name="hard" id="">
+                                <option value="0">Hard worker</option>
+                                <option value="1">Smart worker</option>
+                            </select>
+                        </div>
+                        <div class='input-text'>
+                            <label for='input-text'>Worked in teams ever?</label>
+                            <select name="team" id="">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+
+
+                            </select>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                </header>
+                <footer>
+                    <div class='set'>
+                        <button id='clear' type="reset">Clear</button>
+                        <button id='predict'>Predict</button>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+
+
+    </form>
+
+
+</body>
+
+</html>
+
+<script>
+
+
+    const form = document.getElementById('form');
+    const response_msg = document.getElementById('response_msg');
+    const predict_btn = document.getElementById('predict');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        response_msg.innerText = '';
+        predict_btn.style.display = 'none';
+        await uploadData(e.target);
+        predict_btn.style.display = 'block';
+
+
+    });
+
+    async function uploadData(target) {
+        const response = await fetch(target.action, {
+            method: "POST",
+            body: new FormData(target)
+        });
+
+        if (!response.ok) {
+            alert('Something went wrong,Please try again');
+            return;
+        }
+
+        const fetch_response = await response.json();
+
+        response_msg.innerText = fetch_response.status_msg;
+
+
+
+    }
+</script>
